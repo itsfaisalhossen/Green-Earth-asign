@@ -15,7 +15,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-
     <!-- Tailwind css and daisy ui -->
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
@@ -132,36 +131,13 @@
           Choose Your Trees
         </h3>
         <div class="flex flex-col md:flex-row gap-3">
-          <div class="w-full md:w-[20%]">
+          <div class="w-full h-full md:w-[16%]">
             <h3 class="font-bold mb-2.5">Categories</h3>
             <!-- Categories Container -->
-            <div>
-              <ul class="space-y-2">
-                <li
-                  class="bg-green-700 text-white hover:bg-green-800 transition-all rounded py-1 px-2 hover:text-white cursor-pointer"
-                >
-                  All Trees
-                </li>
-                <li
-                  class="bg-green700 text-black hover:bg-green-800 transition-all rounded py-1 px-2 hover:text-white cursor-pointer"
-                >
-                  Fruit Trees
-                </li>
-                <li
-                  class="bg-green700 text-black hover:bg-green-800 transition-all rounded py-1 px-2 hover:text-white cursor-pointer"
-                >
-                  Flowering Trees
-                </li>
-                <li
-                  class="bg-green700 text-black hover:bg-green-800 transition-all rounded py-1 px-2 hover:text-white cursor-pointer"
-                >
-                  Evergreen Trees
-                </li>
-              </ul>
-            </div>
+            <div class="space-y-2" id="categories-container"></div>
           </div>
           <div
-            class="w-full md:w-[60%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
+            class="w-full h-full md:w-[63%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
           >
             <div class="w-full p-2.5 bg-white space-y-2 rounded-xl">
               <img
@@ -233,7 +209,7 @@
               </button>
             </div>
           </div>
-          <div class="bg-white p-2.5 rounded-xl w-full md:w-[20%]">
+          <div class="bg-white p-2.5 rounded-xl w-full h-full md:w-[23%]">
             <h3 class="font-bold mb-2.5">Your Cart</h3>
             <div class="space-y-2.5">
               <div
