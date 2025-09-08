@@ -156,7 +156,6 @@ const displayPlantDetails = (plant) => {
   `;
 };
 
-let total = 0;
 const handleAddToCart = (e) => {
   const id = e.target.parentNode.parentNode.id;
   const title =
@@ -164,15 +163,14 @@ const handleAddToCart = (e) => {
   const price = parseInt(
     e.target.parentNode.children[0].children[1].children[1].innerText
   );
-  total += price;
-  innerValue.innerText = total;
-
   const cartInfo = {
     id,
     title,
     price,
   };
   plantCart.push(cartInfo);
+  const totalPrice = plantCart.reduce((acc, cur) => cur.price + acc, 0);
+  innerValue.innerText = totalPrice;
   displayCartInfo(plantCart);
 };
 
@@ -198,11 +196,9 @@ const displayCartInfo = (plantCart) => {
 const handleDeleteCartItem = (id) => {
   const filteredBookMarks = plantCart.filter((cartItem) => cartItem.id !== id);
   plantCart = filteredBookMarks;
+  const totalPrice = plantCart.reduce((acc, cur) => cur.price + acc, 0);
+  innerValue.innerText = totalPrice;
   displayCartInfo(plantCart);
-  console.log(plantCart);
-
-  // total -= price;
-  // innerValue.innerText = total;
 };
 
 const showLoading = () => {
