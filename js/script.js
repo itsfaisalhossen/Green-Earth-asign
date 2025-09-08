@@ -110,6 +110,7 @@ const displayAllPlants = (allPlants) => {
 
 let total = 0;
 const handleAddToCart = (e) => {
+  const id = e.target.parentNode.parentNode.id;
   const title =
     e.target.parentNode.parentNode.children[0].children[1].innerText;
   const price = parseInt(
@@ -119,6 +120,7 @@ const handleAddToCart = (e) => {
   innerValue.innerText = total;
 
   const cartInfo = {
+    id,
     title,
     price,
   };
@@ -127,7 +129,7 @@ const handleAddToCart = (e) => {
 };
 
 const displayCartInfo = (plantCart) => {
-  cartContainer.innerHTML = "";
+  cartContainer.innerHTML = " ";
   plantCart.forEach((cartItem) => {
     cartContainer.innerHTML += `
              <div
@@ -137,12 +139,22 @@ const displayCartInfo = (plantCart) => {
                   <h4 class="text-[14px] font-semibold mb-1">${cartItem.title}</h4>
                   <p class="text-sm text-gray-700">৳ ${cartItem.price}</p>
                 </div>
-                <span class="cursor-pointer">
-                  <i class="fa-solid fa-xmark text-[13px]"></i>
-                </span>
+              <p onclick="handleDeleteCartItem('${cartItem.id}')" class="cursor-pointer text-[14px]">
+              <i class="fa-solid fa-xmark"></i>
+              </p> 
          </div>
     `;
   });
+};
+
+const handleDeleteCartItem = (id) => {
+  const filteredBookMarks = plantCart.filter((cartItem) => cartItem.id !== id);
+  plantCart = filteredBookMarks;
+  displayCartInfo(plantCart);
+  console.log(plantCart);
+
+  // total -= price;
+  // innerValue.innerText = total;
 };
 
 loadAllPlants();
