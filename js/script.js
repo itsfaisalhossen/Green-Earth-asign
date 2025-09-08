@@ -44,7 +44,7 @@ const displayPlantCategories = (categories) => {
     categoriesContainer.innerHTML += `
          <li
          id="${category.id}"
-          class="text-black list-none hover:bg-green-500 transition-all rounded py-1.5 px-2 hover:text-white cursor-pointer"
+          class="text-black list-none hover:bg-green-500 transition-all rounded py-1.5 px-2 hover:text-white cursor-pointer text-sm"
                 >
             ${category?.category_name ? category?.category_name : "N/A"}
           </li>
@@ -89,7 +89,7 @@ const displayAllPlants = (allPlants) => {
      }" class="w-full bg-white flex justify-between flex-col  rounded-xl">
             <div class="space-y-2">
               <img
-                class="mx-auto w-full h-[330px] md:h-[200px] object-cover rounded-xl bg-slate-300"
+                class="mx-auto w-full h-[200px] md:h-[200px] object-cover rounded-xl bg-slate-300"
                 src="${plant.image}"
                 alt=""
               />
@@ -123,13 +123,6 @@ const displayAllPlants = (allPlants) => {
   `;
   });
 };
-
-// "id": 1,
-// "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
-// "name": "Mango Tree",
-// "description": "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.",
-// "category": "Fruit Tree",
-// "price": 500
 
 const handleViewDetailsModal = (e) => {
   const id = e.target.parentNode.parentNode.id;
