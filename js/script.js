@@ -1,6 +1,8 @@
 const categoriesContainer = document.getElementById("categories-container");
 const cardContainer = document.getElementById("card-container");
 const cartContainer = document.getElementById("cart-container");
+const modalContainer = document.getElementById("modal-container");
+const plantsDetailsModal = document.getElementById("plants-details-modal");
 const innerValue = document.getElementById("total-Count");
 
 let plantCart = [];
@@ -30,7 +32,11 @@ const loadPlantsByCategories = (id) => {
   const url = `https://openapi.programming-hero.com/api/category/${id}`;
   fetch(url)
     .then((res) => res.json())
-    .then((data) => displayAllPlants(data.plants));
+    .then((data) => displayAllPlants(data.plants))
+    .catch((err) => {
+      alert("Something went worng");
+      console.log(err);
+    });
 };
 
 const displayPlantCategories = (categories) => {
@@ -51,6 +57,7 @@ const displayPlantCategories = (categories) => {
       li.classList.remove("text-white");
     });
     if (e.target.localName === "li") {
+      showLoading();
       e.target.classList.add("text-white");
       e.target.classList.add("bg-green-700");
       loadPlantsByCategories(e.target.id);
@@ -62,9 +69,18 @@ cardContainer.addEventListener("click", (e) => {
   if (e.target.innerText === "Add to Cart") {
     handleAddToCart(e);
   }
+
+  if (e.target.localName === "h4") {
+    // console.log("hello h4");
+    handleViewDetailsModal(e);
+  }
 });
 
 const displayAllPlants = (allPlants) => {
+  if (allPlants.length === 0) {
+    alert("No plants for this cateory");
+    return;
+  }
   cardContainer.innerHTML = "";
   allPlants.forEach((plant) => {
     cardContainer.innerHTML += `
@@ -77,9 +93,9 @@ const displayAllPlants = (allPlants) => {
                 src="${plant.image}"
                 alt=""
               />
-              <p class="font-medium px-2.5">${
+              <h4 class="font-medium px-2.5 cursor-pointer">${
                 plant.name ? plant.name : "N/A"
-              }</p>
+              }</h4>
               <p class="text-sm px-2.5">
                 ${plant.description}
               </p>
@@ -108,6 +124,45 @@ const displayAllPlants = (allPlants) => {
   });
 };
 
+// "id": 1,
+// "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
+// "name": "Mango Tree",
+// "description": "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.",
+// "category": "Fruit Tree",
+// "price": 500
+
+const handleViewDetailsModal = (e) => {
+  const id = e.target.parentNode.parentNode.id;
+  fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayPlantDetails(data.plants))
+    .catch((err) => {
+      alert("Something went worng");
+      console.log(err);
+    });
+};
+
+const displayPlantDetails = (plant) => {
+  plantsDetailsModal.showModal();
+  modalContainer.innerHTML = `
+    <div class="flex justify-between items-center">
+    <div class="font-semibold text-[16px]">
+    <p >${plant.name}</p>
+    <p class="font-semibold">৳ ${plant.price}</p>
+      </div>
+         <p
+        class="px-3 text-center font-semibold py-1 text-[12px] bg-green-100 rounded-full">
+          ${plant.category ? plant.category : plant.category}
+        </p>
+    </div>
+      <img
+        class="mx-auto w-full h-[220px] md:h-[330px] object-cover rounded-xl bg-slate-300"
+        src="${plant.image ? plant.image : "N/A"}" alt="" />
+    <p>${plant.description}</p>
+  
+  `;
+};
+
 let total = 0;
 const handleAddToCart = (e) => {
   const id = e.target.parentNode.parentNode.id;
@@ -129,7 +184,7 @@ const handleAddToCart = (e) => {
 };
 
 const displayCartInfo = (plantCart) => {
-  cartContainer.innerHTML = " ";
+  cartContainer.innerHTML = "";
   plantCart.forEach((cartItem) => {
     cartContainer.innerHTML += `
              <div
@@ -155,6 +210,14 @@ const handleDeleteCartItem = (id) => {
 
   // total -= price;
   // innerValue.innerText = total;
+};
+
+const showLoading = () => {
+  cardContainer.innerHTML = `
+        <div class="w-full mx-auto py-24 text-center col-span-3">
+              <span class="loading loading-bars loading-xl"></span>
+        </div>
+  `;
 };
 
 loadAllPlants();
